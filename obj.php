@@ -1,6 +1,6 @@
 <?php
 
-/* -- RASTREIO CORREIOS-- */
+/* -- RASTREIO CORREIOS MODIFICADO POR GERMANO RAIMAR-- */
 
 /* Method POST and GET
 	 * Return Json
@@ -20,7 +20,12 @@
 if (isset($_GET) || isset($_POST)) {
 	$request = isset($_GET) ? $_GET : $_POST;
 	$obj = isset($request['obj']) ? $request['obj'] : false;
+
+	//aqui eu "quebro" a string para criar um array de encomendas, permitindo o recebimento de mais de uma encomenda
+	//a ser pesquisada
 	$obj = explode(";", $obj);
+
+	//looping para executar a rotina para cada encomenda enviada
 	for ($i = 0; $i < count($obj); $i++) {
 
 		$post = array('Objetos' => $obj[$i]);
@@ -88,7 +93,7 @@ if (isset($_GET) || isset($_POST)) {
 			echo $json;
 			exit;
 		}
-
+		//cria um objeto identificando o código da encomenda e as informações extraídas armazenadas no array $novo_array
 		$arrayCompleto[$obj[$i]] = (object)$novo_array;
 	}
 
